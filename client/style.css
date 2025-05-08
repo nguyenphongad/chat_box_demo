@@ -91,10 +91,64 @@ body {
 }
 
 .ai-message {
-    background: linear-gradient(120deg, #f5f5f5, #e0e0e0);
+    background: linear-gradient(120deg, #f8f9fa, #eaecef);
     color: #333;
     border-bottom-left-radius: 5px;
+    font-weight: 400;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.ai-message strong, 
+.ai-message b {
+    font-weight: 700;
+    color: #2C3E50;
+    font-size: 16px;
+}
+
+.ai-message br {
+    display: block;
+    content: "";
+    margin: 10px 0;
+}
+
+.ai-message ul {
+    padding-left: 5px;
+    margin: 10px 0;
+    list-style-type: none;
+}
+
+.ai-message li {
+    margin: 8px 0;
+    position: relative;
+    padding-left: 25px;
+}
+
+.ai-message li:before {
+    content: "•";
+    color: #4CAF50;
+    font-weight: bold;
+    position: absolute;
+    left: 5px;
+    font-size: 18px;
+}
+
+/* Cải thiện khoảng cách giữa các đoạn văn */
+.ai-message p {
+    margin: 10px 0;
     font-weight: 500;
+}
+
+/* Tăng độ tương phản và làm nổi bật các phần quan trọng */
+.ai-message .highlight {
+    background-color: #FFF9C4;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+/* Fix cho trường hợp các ul nối tiếp nhau */
+.ai-message ul + ul {
+    margin-top: 0;
 }
 
 .error-message {
@@ -115,17 +169,24 @@ body {
     background-color: white;
     border-top: 1px solid #eee;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    align-items: flex-end; /* Căn chỉnh button với textarea */
 }
 
 #userMessage {
     flex: 1;
     padding: 15px;
     border: 1px solid #ddd;
-    border-radius: 24px;
+    border-radius: 18px;
     font-size: 16px;
     outline: none;
-    transition: border 0.3s;
+    transition: border 0.3s, height 0.2s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05) inset;
+    resize: none; /* Tắt resize mặc định */
+    min-height: 56px;
+    max-height: 150px;
+    font-family: inherit;
+    line-height: 1.5;
+    overflow-y: auto; /* Cho phép cuộn khi nội dung dài */
 }
 
 #userMessage:focus {
@@ -166,21 +227,58 @@ body {
 .loading-btn {
     color: transparent !important;
     pointer-events: none;
+    position: relative;
 }
 
-.loading-btn .loading {
+/* Hiệu ứng loading dots mới */
+.loading-dots {
     position: absolute;
-    left: 50%;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top: 2px solid #fff;
-    animation: spin 0.8s linear infinite;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.loading-dots span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: loadingDots 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes loadingDots {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Xóa bỏ các styles loading cũ không cần thiết */
+/* 
+.dots-loading và các styles liên quan có thể loại bỏ vì không còn sử dụng
+*/
 
 .message-animation {
     animation: slideIn 0.3s ease-out;
